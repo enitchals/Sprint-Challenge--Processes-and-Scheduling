@@ -89,6 +89,27 @@ int main(void)
             break;
         }
 
+
+        // Fork a child process to run the new command
+        pid_t pid = fork();
+        if (pid==-1) {
+            printf("Error!\n");
+        }
+
+        // Parent process waits for the child to complete
+        else if (pid>0) {
+            int status;
+            waitpid(pid, &status, 0);
+        }
+        
+        // Exec the command in the child process
+        else {
+            execvp(args[0], &args[0]);
+        }
+
+
+
+
         #if DEBUG
 
         // Some debugging output
